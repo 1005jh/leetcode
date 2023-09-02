@@ -72,6 +72,22 @@ app.listen(port, () => {
 });
 
 /**
+ * mysql 로컬 db 접속 후 아래 순서대로 진행
+ * *
+ * database 만들기
+ * create database breadcrumbs 
+ * *
+ * 테이블 만들기
+ * CREATE TABLE pages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    parentId INT,
+    path JSON,
+    FOREIGN KEY (parentId) REFERENCES pages(id)
+);
+ * *
+ * 데이터 넣기
  * -- 최상위 부모 페이지 생성
 INSERT INTO pages (title, content, parentId, path) VALUES ('부모', '부모', NULL, '[]');
 
