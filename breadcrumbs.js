@@ -264,7 +264,7 @@ app.put("/page/:id", async (req, res) => {
         pageId,
       ]);
 
-    const updateDescendantsPath = async (parentId, parentPath) => {
+    const updatePath = async (parentId, parentPath) => {
       const [children] = await connection
         .promise()
         .query(`SELECT * FROM pages WHERE parentId = ?`, [parentId]);
@@ -277,11 +277,11 @@ app.put("/page/:id", async (req, res) => {
             JSON.stringify(newChildPath),
             child.id,
           ]);
-        await updateDescendantsPath(child.id, newChildPath);
+        await updatePath(child.id, newChildPath);
       }
     };
 
-    await updateDescendantsPath(pageId, newPath);
+    await updatePath(pageId, newPath);
 
     res.status(200).json({ message: "success" });
   } catch (error) {
